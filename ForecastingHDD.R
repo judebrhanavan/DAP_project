@@ -1,6 +1,7 @@
 # Forecasting DailyHDD
 # Ref : https://otexts.com/fpp2/arima-r.html, https://otexts.com/fpp2/seasonal-arima.html
 
+#CHAGE ME : folder where the exported csv files are saved
 setwd("C:/Users/AAJB/Desktop/MSc Data Analytics/Database and Analysis Programming/python/DAP_project")
 options(scipen=999)  # suppress scientic notation 
 
@@ -43,11 +44,12 @@ autoplot(fc_arima, PI=FALSE) + autolayer(test_hdd, series="Test Data") +xlab('Ye
 # read csv file
 data <- read.csv('combined.csv')
 
+#both daily and annual seasonality
 hdd_ts <- msts(data[,3], start = c(2011,25), seasonal.periods=c(24,8766))
 temperature <- data[,2]
 
 # trainng set
-trainingsetsize = nrow(data) - 24*7
+trainingsetsize = nrow(data) - 24*7 # test set is one week data
 train_hdd <- subset(hdd_ts, end=trainingsetsize)
 temp_train <- head(temperature, trainingsetsize)
 
@@ -55,16 +57,16 @@ temp_train <- head(temperature, trainingsetsize)
 test_hdd <- subset (hdd_ts, start = trainingsetsize+1)
 temp_test <- tail(temperature, 24*7)
 
-
-## Harmonic regression : find optimal K values for daily and annual seasonality
 bestfit <- list(aicc=Inf)
 bestfourier <- numeric(2)
 
+# Find optimal harmonic frequencies (K values). 
 for (i in 1:12){
   for (j in 1:8){
     myfourier <- c(i,j)
     print(paste(paste("i is ",i), paste("j is ", j)))
     z <- fourier(train_hdd, K=c(i,j))
+    #seasonality is being handled by Fourier terms, set sesoanl = FALSE in arima
     fit <- auto.arima(train_hdd, xreg=cbind(z,temp_train), seasonal=FALSE)
     if (fit$aicc < bestfit$aicc) {
       bestfit <- fit
