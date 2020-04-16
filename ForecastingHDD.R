@@ -61,6 +61,7 @@ bestfit <- list(aicc=Inf)
 bestfourier <- numeric(2)
 
 # Find optimal harmonic frequencies (K values). 
+# Note : This loop takes a while to run
 for (i in 1:12){
   for (j in 1:8){
     myfourier <- c(i,j)
@@ -74,9 +75,16 @@ for (i in 1:12){
     }
   }
 }
-# bestfourier = 8 7, AICc=-14631.78 
-bestfourier
+
+# print the optimal harmonics frequencies
+bestfourier #bestfourier = 8 7, AICc=-14631.78 
+
+# Fourier Terms for Test Data
+zf <- fourierf (test_hdd, K=bestfourier, h =168)
+
+#Generate Forecasts
 fc <- forecast(bestfit, xreg=cbind(zf,temp_test), h=168)
 
+# Plot forecasts and test data in the same figure
 autoplot(fc)  + autolayer(test_hdd, series="Test Data") + xlab('Date') + ylab('Heating Energy Consumption')
 
