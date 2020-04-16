@@ -80,7 +80,7 @@ for (i in 1:12){
 bestfourier #bestfourier = 8 7, AICc=-14631.78 
 
 # Fourier Terms for Test Data
-zf <- fourierf (test_hdd, K=bestfourier, h =168)
+zf <- fourier(test_hdd, K=bestfourier, h =168)
 
 #Generate Forecasts
 fc <- forecast(bestfit, xreg=cbind(zf,temp_test), h=168)
