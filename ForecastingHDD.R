@@ -1,5 +1,6 @@
 # Forecasting DailyHDD
-# Ref : https://otexts.com/fpp2/arima-r.html, https://otexts.com/fpp2/seasonal-arima.html
+# Ref auto arima 			    : https://otexts.com/fpp2/arima-r.html
+# Ref Seasonal arima			: https://otexts.com/fpp2/seasonal-arima.html 
 
 #CHAGE ME : folder where the exported csv files are saved
 setwd("C:/Users/AAJB/Desktop/MSc Data Analytics/Database and Analysis Programming/python/DAP_project")
@@ -36,9 +37,9 @@ autoplot(fc_arima, PI=FALSE) + autolayer(test_hdd, series="Test Data") +xlab('Ye
 
 # -------------------------------------------------------------------------------------------------------------------
 # Foreasting hourlyHDD with dynamic regression 
-# Ref : https://otexts.com/fpp2/dynamic.html
-# Ref : https://otexts.com/fpp2/complexseasonality.html
-# Ref : https://robjhyndman.com/hyndsight/seasonal-periods/
+# Ref Dynamic Harmonic Regression     : https://otexts.com/fpp2/dhr.html
+# Ref Complex seasonality time series	: https://otexts.com/fpp2/complexseasonality.html
+# Ref msts timeseries class           : https://robjhyndman.com/hyndsight/seasonal-periods/
 
 
 # read csv file
